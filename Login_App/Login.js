@@ -8,7 +8,7 @@ import {
     StyleSheet ,
     StatusBar,
     Alert,
-    a
+    Image
 } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
@@ -19,7 +19,7 @@ import { useTheme } from 'react-native-paper';
 import Users from '../Users/users';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const SignInScreen = ({navigation}) => {
+const Login = ({navigation}) => {
 
    // const AuthContext =React.createContext();
    
@@ -109,14 +109,14 @@ const SignInScreen = ({navigation}) => {
              
 
         if ( data.username.length == 0 || data.password.length == 0 ) {
-            Alert.alert('Entrée erronée!', 'Nom d\'utilisateur ou mot de passe ne doit pas être vide.', [
+            Alert.alert('Erreur de saisie!', 'Veuillez remplir tous les champs.', [
                 {text: 'Okay'}
             ]);
             return;
         }
 
         if ( foundUser.length == 0 ) {
-            Alert.alert('Utilisateur invalide!', 'Utilisateur ou mdp erronné.', [
+            Alert.alert('Utilisateur invalide!', 'Utilisateur ou mot de passe invalide.', [
                 {text: 'Okay'}
             ]);
             return;
@@ -209,9 +209,16 @@ const SignInScreen = ({navigation}) => {
 
     return (
       <View style={styles.container}>
-          <StatusBar backgroundColor='#57A0D3' barStyle="light-content"/>
+          <StatusBar backgroundColor='#010a4f' barStyle="light-content"/>
+        
         <View style={styles.header}>
-            <Text style={styles.text_header}>Bienvenue!</Text>
+        <View style={styles.container1}>
+        <Image
+            source={require("../assets/bg_1.jpg")}
+            resizeMode="contain"
+            style={styles.image}
+          ></Image>
+        </View>
         </View>
         <Animatable.View 
             animation="fadeInUpBig"
@@ -221,10 +228,10 @@ const SignInScreen = ({navigation}) => {
         >
             <Text style={[styles.text_footer, {
                 color: colors.text
-            }]}>Utilisateur</Text>
+            }]}>Nom d'Utilisateur :</Text>
             <View style={styles.action}>
                 <FontAwesome 
-                    name="user-o"
+                    name="user"
                     color={colors.text}
                     size={20}
                 />
@@ -243,7 +250,7 @@ const SignInScreen = ({navigation}) => {
                     animation="bounceIn"
                 >
                     <Feather 
-                        name="check-circle"
+                        name="check-square"
                         color="green"
                         size={20}
                     />
@@ -252,7 +259,7 @@ const SignInScreen = ({navigation}) => {
             </View>
             { data.isValidUser ? null : 
             <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Le nom d'utilisateur doit comporter 4 caractères.
+            <Text style={styles.errorMsg}>Le nom d'utilisateur doit comporter au minimum 4 caractères.
 </Text>
             </Animatable.View>
             }
@@ -264,12 +271,12 @@ const SignInScreen = ({navigation}) => {
             }]}>Mot de passe</Text>
             <View style={styles.action}>
                 <Feather 
-                    name="lock"
+                    name="key"
                     color={colors.text}
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Votre mdp"
+                    placeholder="Mot de passe"
                     placeholderTextColor="#666666"
                     secureTextEntry={data.secureTextEntry ? true : false}
                     style={[styles.textInput, {
@@ -298,13 +305,13 @@ const SignInScreen = ({navigation}) => {
             </View>
             { data.isValidPassword ? null : 
             <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Le mot de passe doit comporter 8 caractères.</Text>
+            <Text style={styles.errorMsg}>Le mot de passe doit comporter au minimum 8 caractères.</Text>
             </Animatable.View>
             }
             
 
             <TouchableOpacity>
-                <Text style={{color: '#57A0D3', marginTop:15}}>Mot de passe oublié</Text>
+               
             </TouchableOpacity>
             <View style={styles.button}>
                 <TouchableOpacity
@@ -314,6 +321,7 @@ const SignInScreen = ({navigation}) => {
                <Text style={styles.Connect}  colors={['#08d4c4', '#01ab9d']} > SE CONNECTER
              
                   </Text>
+            
                     </TouchableOpacity>
 
 
@@ -327,19 +335,19 @@ export default Login;
 const styles = StyleSheet.create({
     container: {
       flex: 1, 
-      backgroundColor: '#57A0D3'
+      backgroundColor: '#010a4f'
     },
     header: {
         flex: 1,
         justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingBottom: 50
+        paddingHorizontal: 10,
+        paddingBottom: 130
     },
     footer: {
         flex: 3,
         backgroundColor: '#fff',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
+      
+   
         paddingHorizontal: 20,
         paddingVertical: 30
     },
@@ -351,36 +359,46 @@ const styles = StyleSheet.create({
         
     },
     text_footer: {
-        color: '#57A0D3',
+        color: '#010a4f',
         fontSize: 18
     },
     action: {
         flexDirection: 'row',
         marginTop: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#0E4D92',
+        borderBottomColor: '#010a4f',
         paddingBottom: 5
     },
     actionError: {
         flexDirection: 'row',
         marginTop: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#FF0000',
+        borderBottomColor: '#CD5C5C',
         paddingBottom: 5
     },
     textInput: {
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,
-        color: '#57A0D3',
+        color: '#010a4f',
     },
     errorMsg: {
-        color: '#FF0000',
+        color: '#CD5C5C',
         fontSize: 14,
     },
     button: {
         alignItems: 'center',
         marginTop: 50
+    },
+    image:{
+        width: 620,
+    height: 285,
+        transform: [
+          {
+            rotate: "0.00deg"
+          }
+        ],
+        
     },
     signIn: {
         width: '100%',
@@ -393,17 +411,28 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold'
     },Connect:{
-        width: '100%',
-        height: 50,
-        justifyContent: 'center',
+        height:40,
+        borderRadius: 40,
         alignItems: 'center',
-        borderRadius: 10,
+        justifyContent: 'center',
+        marginVertical: 5,
+        width: '100%',
         textAlign:"center",
-        backgroundColor:'#57A0D3',
+        backgroundColor:'#010a4f',
         color:'#fff',
         fontSize:20,
-        top :2,
-        textAlign:"center",
-        alignSelf: "center"
-    }
+        top :10,
+       opacity:0.8,
+ 
+
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover'
+      },
+      container1: {
+        width: 600,
+        height: 285,
+        flex:1
+      },
   });

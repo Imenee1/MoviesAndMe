@@ -54,15 +54,6 @@ const MoviesTabNavigator = createBottomTabNavigator(
             style={styles.icon}/>
         }
       }
-    }, News: {
-      screen: NewsStackNavigator,
-      navigationOptions: {
-        tabBarIcon: () => {
-          return <Image
-            source={require('../Images/ic_fiber_new.png')}
-            style={styles.icon}/>
-        }
-      }
     },
     Maps: {
       screen: MapScreen,
@@ -70,6 +61,16 @@ const MoviesTabNavigator = createBottomTabNavigator(
         tabBarIcon: () => {
           return <Image
             source={require('../Images/location.png')}
+            style={styles.icon}/>
+        }
+      }
+    }
+    , News: {
+      screen: NewsStackNavigator,
+      navigationOptions: {
+        tabBarIcon: () => {
+          return <Image
+            source={require('../Images/ic_fiber_new.png')}
             style={styles.icon}/>
         }
       }
