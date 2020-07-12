@@ -39,7 +39,7 @@ const Login = ({navigation}) => {
         isValidUser: true,
         isValidPassword: true,
     });
-
+    
     const { colors } = useTheme();
   // const { signIn } = React.useContext(AuthContext);
 
@@ -102,27 +102,20 @@ const Login = ({navigation}) => {
 
         var var1= false;
         const foundUser = Users.filter( item => {
-              return userName == item.username && password == item.password ;
-           
-        });
-        
+              if( userName == item.username && password == item.password) 
+              {
+                   navigation.navigate("Search");
+              }
              
+        });
+       
 
         if ( data.username.length == 0 || data.password.length == 0 ) {
             Alert.alert('Erreur de saisie!', 'Veuillez remplir tous les champs.', [
-                {text: 'Okay'}
+                {text: 'D\'accord'}
             ]);
             return;
         }
-
-        if ( foundUser.length == 0 ) {
-            Alert.alert('Utilisateur invalide!', 'Utilisateur ou mot de passe invalide.', [
-                {text: 'Okay'}
-            ]);
-            return;
-        }
-     //   navigation.navigate('Navigation');
-      
     }
     const loginReducer = (prevState, action) => {
         switch( action.type ) {

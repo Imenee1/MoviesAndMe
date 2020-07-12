@@ -17,7 +17,7 @@ export default class MapScreen extends React.Component {
     _getLocation = async () => {
       const {status} = await Location.requestPermissionsAsync();
       if(status !== 'granted'){
-        Alert.alert("Error","Location is not granted")
+        Alert.alert("Erreur"," L'emplacement n'est pas accordé")
         return
       }
       const userLocation = await Location.getCurrentPositionAsync({});
@@ -63,7 +63,7 @@ export default class MapScreen extends React.Component {
                 latitude: this.state.region.latitude,
                 longitude: this.state.region.longitude
               }}
-              title="Your Location"
+              title="Votre emplacement"
             />
             {dataCinema.map(cinema =>(
                  <Marker

@@ -8,6 +8,7 @@ import FilmDetail from '../Components/FilmDetail'
 import Favorites from '../Components/Favorites'
 import News from '../Components/News'
 import MapScreen from '../Components/MapScreen';
+import Login from "../Login_App/Login"
 
 const SearchStackNavigator = createStackNavigator({
   Search: {
@@ -33,6 +34,7 @@ const NewsStackNavigator = createStackNavigator({
     screen: FilmDetail,
   }
 })
+
 const MoviesTabNavigator = createBottomTabNavigator(
   {
     Search: {
@@ -85,6 +87,14 @@ const MoviesTabNavigator = createBottomTabNavigator(
     }
   }
 )
+const LoginStackNavigator = createStackNavigator({
+  Login: {
+    screen: Login
+  },
+  Home: {
+    screen: MoviesTabNavigator,
+  }
+})
 
 const styles = StyleSheet.create({
   icon: {
@@ -93,4 +103,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default createAppContainer(MoviesTabNavigator)
+export default createAppContainer(LoginStackNavigator)
