@@ -7,8 +7,8 @@ import { PersistGate } from 'redux-persist/es/integration/react'
 import Login from './Login_App/Login'
 export default class App extends React.Component {
   render() {
-    return( <Login/>)
-  /*  let persistor = persistStore(Store)
+    //return( <Login/>)
+   let persistor = persistStore(Store)
     return (
       <Provider store={Store}>
         <PersistGate persistor={persistor}>
@@ -16,6 +16,6 @@ export default class App extends React.Component {
         </PersistGate>
       </Provider>
       
-    )*/
+    )
   }
 }

@@ -11,7 +11,8 @@ class Favorites extends React.Component {
   render() {
     return (
       <View style={styles.main_container}>
-              <View style={styles.avatar_comtainer}>
+              <View style={styles.avatar_container}>
+                <Avatar/>
         </View>
       <FilmList
         films={this.props.favoritesFilm}
