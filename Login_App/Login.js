@@ -1,35 +1,24 @@
-import React ,{useContext ,useEffect }  from 'react';
+import React ,{useEffect }  from 'react';
 import { 
-    View, 
-    Text, 
-    TouchableOpacity, 
-    TextInput,
-    Platform,
-    StyleSheet ,
-    StatusBar,
-    Alert,
-    Image
+    View, Text, TouchableOpacity, TextInput,Platform, StyleSheet , StatusBar, Alert,Image
 } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import AuthContext from './context';
 import { useTheme } from 'react-native-paper';
 import Users from '../Users/users';
-import AsyncStorage from '@react-native-community/async-storage';
+
 
 const Login = ({navigation}) => {
 
-   // const AuthContext =React.createContext();
-   
    const initialLoginState = {
     isLoading: true,
     userName: null,
     userToken: null,
   };
 
-  //const { params } = navigation.state
+ 
 
     const [data, setData] = React.useState({
         username: '',
@@ -41,7 +30,7 @@ const Login = ({navigation}) => {
     });
     
     const { colors } = useTheme();
-  // const { signIn } = React.useContext(AuthContext);
+  
 
     const textInputChange = (val) => {
         if( val.trim().length >= 4 ) {
@@ -117,89 +106,7 @@ const Login = ({navigation}) => {
             return;
         }
     }
-    const loginReducer = (prevState, action) => {
-        switch( action.type ) {
-          case 'RETRIEVE_TOKEN': 
-            return {
-              ...prevState,
-              userToken: action.token,
-              isLoading: false,
-            };
-          case 'LOGIN': 
-            return {
-              ...prevState,
-              userName: action.id,
-              userToken: action.token,
-              isLoading: false,
-            };
-          case 'LOGOUT': 
-            return {
-              ...prevState,
-              userName: null,
-              userToken: null,
-              isLoading: false,
-            };
-          case 'REGISTER': 
-            return {
-              ...prevState,
-              userName: action.id,
-              userToken: action.token,
-              isLoading: false,
-            };
-        }
-      };
-    
-      const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
-    
-      const authContext = React.useMemo(() => ({
-        signIn: async(foundUser) => {
-          // setUserToken('fgkj');
-          // setIsLoading(false);
-          const userToken = String(foundUser[0].userToken);
-          const userName = foundUser[0].username;
-          
-          try {
-            await AsyncStorage.setItem('userToken', userToken);
-          } catch(e) {
-            console.log(e);
-          }
-          // console.log('user token: ', userToken);
-          dispatch({ type: 'LOGIN', id: userName, token: userToken });
-        },
-        signOut: async() => {
-          // setUserToken(null);
-          // setIsLoading(false);
-          try {
-            await AsyncStorage.removeItem('userToken');
-          } catch(e) {
-            console.log(e);
-          }
-          dispatch({ type: 'LOGOUT' });
-        },
-        signUp: () => {
-          // setUserToken('fgkj');
-          // setIsLoading(false);
-        },
-        toggleTheme: () => {
-          setIsDarkTheme( isDarkTheme => !isDarkTheme );
-        }
-      }), []);
-    
-      useEffect(() => {
-        setTimeout(async() => {
-          // setIsLoading(false);
-          let userToken;
-          userToken = null;
-          try {
-            userToken = await AsyncStorage.getItem('userToken');
-          } catch(e) {
-            console.log(e);
-          }
-          // console.log('user token: ', userToken);
-          dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
-        }, 1000);
-      }, []);
-
+ 
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#010a4f' barStyle="light-content"/>
