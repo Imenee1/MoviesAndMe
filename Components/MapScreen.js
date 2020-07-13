@@ -1,10 +1,10 @@
 import React from 'react';
-import MapView,{Marker} from'react-native-maps';
-import { StyleSheet, Text, View ,ActivityIndicator,Dimensions } from 'react-native';
+import getDirections from 'react-native-google-maps-directions'
+import MapView,{Marker,Polyline} from'react-native-maps';
+import { StyleSheet,TouchableOpacity,Image, View ,ActivityIndicator,Dimensions, Text } from 'react-native';
 import * as Location from 'expo-location'
-import * as Permissions from 'expo-permissions';
 import dataCinema from './CinemasData';
-export default class MapScreen extends React.Component {
+export default class Map_Direction extends React.Component {
  
     constructor(props){
       super(props)
@@ -31,8 +31,7 @@ export default class MapScreen extends React.Component {
         mapIsReady: true
       })
    
-      console.log(this.state.region)
-   
+     
     }
    
     UNSAFE_componentWillMount(){
@@ -49,8 +48,37 @@ export default class MapScreen extends React.Component {
         }
       })
     }
-   
+    handleGetDirections = (latitude,longitude) => {
+        const data = {
+           source: {
+            latitude:  this.state.region.latitude,
+            longitude: this.state.region.longitude
+          },
+          destination: {
+            latitude: latitude,
+            longitude: longitude
+          },
+          params: [
+            {
+              key: "travelmode",
+              value: "driving"        // may be "walking", "bicycling" or "transit" as well
+            },
+            {
+              key: "dir_action",
+              value: "navigate"       // this instantly initializes navigation using the given travel mode
+            }
+          ],
+         
+        }
+     
+        getDirections(data)
+      }
+    
     _showMap = () => {
+     
+
+
+
       if(this.state.mapIsReady){
         return(
           <MapView style={styles.mapStyle} 
@@ -58,13 +86,17 @@ export default class MapScreen extends React.Component {
             showsUserLocation={true}
             onUserLocationChange={locationChangedResult => this.setUserLocation(locationChangedResult.nativeEvent.coordinate)}
           >
+           
             <Marker
               coordinate={{
                 latitude: this.state.region.latitude,
                 longitude: this.state.region.longitude
               }}
               title="Votre emplacement"
-            />
+            >
+               
+            </Marker>
+          
             {dataCinema.map(cinema =>(
                  <Marker
                  coordinate={{
@@ -72,7 +104,17 @@ export default class MapScreen extends React.Component {
                   longitude: cinema.conrdinate.longitude
                 }}
                 title={cinema.title}
-               />
+                onCalloutPress={() => this.handleGetDirections(cinema.conrdinate.latitude,cinema.conrdinate.longitude)}
+               >
+                    <MapView.Callout>
+                       <Text>
+                           {cinema.title}
+                       </Text>
+                       <Text>
+                           Obtenir la direction
+                       </Text>
+                    </MapView.Callout>
+               </Marker>
             
               ))}
           </MapView>
@@ -86,6 +128,7 @@ export default class MapScreen extends React.Component {
         )
       }
     }
+
    
     render() {
       return (
@@ -115,5 +158,27 @@ export default class MapScreen extends React.Component {
       bottom: 0,
       alignItems: 'center',
       justifyContent: 'center'
-    }
+    },
+    share_touchable_floatingactionbutton: {
+        position: 'absolute',
+        width: 60,
+        height: 60,
+        right: 30,
+        bottom: 30,
+        borderRadius: 30,
+        backgroundColor: '#e91e63',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+     justifyContent: 'center',
+    paddingVertical: 16,
+      
+        top: '50%', //for center align
+        alignSelf: 'flex-end'
+       
+      },
+      share_image: {
+        width: 30,
+        height: 30
+      }
   });
